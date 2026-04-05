@@ -1,2 +1,35 @@
-# Safe-Spend
-A smart, React Native expense tracker that calculates your safe daily spending limit and helps you aggressively clear debts.
+# SafeSpend
+
+## 📝 Overview
+Every day, SafeSpend adjusts how much you can spend without touching essential funds. Rather than depend on constant internet access, it runs locally using a method built for uncertainty. This system keeps debt payments and fixed costs separate by design. Instead of just recording numbers, it actively reshapes limits as conditions shift. The approach treats money for bills differently from casual expenses. Through continuous updates, it enforces balance even when income varies. Not based on averages, it responds instantly to actual changes in account activity.
+
+## 🧠 Core Logic & Architecture
+A structure of operations follows a fixed monetary framework, focusing first on protecting assets while removing liabilities. With time, safety of funds takes precedence over growth, guided by predictable calculations instead of market trends. Stability emerges through consistent reduction of obligations, replacing risk with measured progress. Each phase operates under rules that limit exposure, favoring clarity over speculation. Long-term balance shapes decisions, where every step aligns with predefined outcomes rather than forecasts.
+
+*   **Computational Core:** A calculation core processes spending records, isolates essential debt markers through exclusion rules, then determines a shifting threshold updated each day using variable time windows drawn from evolving inputs.
+*   **Categorical Segmentation:** A clear divide appears when handling categories: a fixed true-or-false rule marks whether an item counts as debt. This split keeps running costs apart from repayment duties by design. One consequence unfolds quietly—basic systems often miscount, seeing deductions twice where there is only one. Here, that illusion fades because structure blocks confusion before it forms.
+*   **Relational Persistence:** Apart from standard methods, relational persistence applies a tailored `AsyncStorage` interface. Through this approach, continuity of state remains intact between sessions. Instead of relying on outside servers, internal mechanisms preserve information locally. Security improves when data stays within the device environment. Privacy gains strength due to absence of network transmission.
+
+## 🤖 AI Prompting Strategy & QA Journey
+*Behind this project lies code shaped through coordinated Large Language Models. A look follows at how prompts were structured—steering the system gradually toward a functional, error-free outcome.*
+
+### 1. System Design: The Core Instruction
+The work started with framing the "Survivor Algorithm" not through functionality, yet as a rule rooted in mathematics. From there, guidance was given for the system to assume the role of a Financial Systems Architect, emphasizing how calculations and data storage must operate independently.
+
+> "Function as a senior system architect. Build a React Native app using a method named Survivor Algorithm for financial planning. At its center lies a tool: `calculateSafeSpend`. This function receives four inputs - `totalBudget`, `deductions`, an array labeled `expenses[]`, along with `endDate`. Implementation of user interface components falls outside current scope. Focus remains solely on logic structure and parameter handling within the utility. A single fixed outcome must come from the calculation of each day's limit. The structure supports stored data when disconnected, handled through AsyncStorage. From that point onward, reliability in output defines the function’s core behavior. When connectivity is absent, saved information remains accessible. Consistency emerges only if inputs lead to identical results every time. Storage operates locally by design, avoiding external dependencies."
+
+### 2. Logic Checking and Fixing
+In the initial stage of setup, it became clear there was a flaw in reasoning—repayment entries were being classified alongside regular outflows, distorting available funds. A revised instruction needed implementation to apply accurate filtering rules immediately.
+
+> "Look again at the `reduce` function inside `calculations.ts`. What happens now is subtraction of debt payments from the 'Safe Pool' amount - that step does not belong. Although these outflows are real, they were already set aside before allocation calculations began. Because of this prior reservation, touching the daily available cap here creates an incorrect double-count effect. The limit stays accurate only if untouched by such fixed commitments. Adjustment needed: exclude those items entirely during this phase. Beginning with the expenses, remove any entry marked as debt prior to summing. Where applicable, ensure the interface still shows debts separately. The calculation proceeds without those entries. Even so, the display must not alter. Filtering occurs behind the scenes. Only non-debt values count toward the final amount. Despite visibility in view, excluded from math entirely. After selection, processing continues on clean data. User sees full picture. System works on subset. Before addition, separation takes place. Not included means ignored silently."
+
+### 3. Edge-Case Refinement
+Despite aiming for reliability, testing exposed instability in time-based calculations. When campaigns conclude today, the system attempts dividing by zero—a flaw revealed under load. Handling such edge cases became necessary after errors emerged unexpectedly. A protective limit was introduced quietly during refinement.
+
+> "Perform a QA audit on `getDaysRemaining`. If the user sets the `endDate` to today, the current logic produces a `diffDays` of 0, causing the budget calculator to crash. I need you to implement a boundary condition: if the calculated difference is less than or equal to 0, return exactly 1. This ensures the algorithm treats the final day of a campaign as a valid spending period rather than a mathematical impossibility."
+
+## ⚙️ Technologies Used
+*   **Sequential Reasoning:** A sequence of deliberate steps shapes how artificial intelligence navigates layered reasoning paths. Through carefully timed inputs, direction emerges across structured boundaries. One turn follows another, each shaping the next without explicit instruction.
+*   **Algorithmic Verification:** Verification processes detect unintended errors within computational logic during financial analysis. Adjustments follow identification of flawed reasoning sequences. Corrections apply where arithmetic assumptions fail verification checks.
+*   **React Native & TypeScript:** Building a robust, type-safe mobile interface that ensures structural integrity across the entire application lifecycle.
+*   **Local Data Persistence:** Stored data remains secure across sessions through isolated local persistence. Financial details stay protected using pathways only accessible internally. Lifecycle control ensures reliability even when connectivity drops unexpectedly.
